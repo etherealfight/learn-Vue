@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .content {
+            display: flex;
+        }
+
+        .counter {
+            background-color: darkgray;
+            text-align: center;
+            line-height: 80px;
+            vertical-align: middle;
+            width: 80px;
+            height: 80px;
+            font-size: 40px;
+        }
+
+        button {
+            width: 80px;
+            height: 80px;
+            font-size: 20px;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+        }
+
+        .active {
+            visibility:hidden;
+            border: 10px, solid, red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <h2>当前计数：{{counter}}</h2>
+        <div class="content">
+            <button @click="sub()">-</button>
+            <div class="counter">{{counter}}</div>
+            <button @click="add()">+</button>
+        </div>
+        <button @click="changeState()" title="切换背景图片状态">切换背景图片状态</button>
+        <br>
+        <!-- <img src="../bg.jpg" alt="" v-show="isShow"> -->
+        <img src="../../bg.jpg" alt="" :class="isActive?'active':''" @click="changeState">
+    </div>
+    <script src="../../vue.js"></script>
+    <script src="../../first-try/vue-02.js"></script>
+
+</body>
+
+</html>

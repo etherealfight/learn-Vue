@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style type="text/css">
+        body{
+            display: flex;
+            /* margin: auto; */
+            /* padding: auto; */
+            width: 100vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .app {
+            display: flex;
+            flex-direction: row;
+            align-items: center;    
+            width: 500px;
+            height: 400px;
+        }
+
+        img {
+            height: 40px;
+            width: 40px;
+            vertical-align: middle;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .mainPic {
+            width: 500px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <a href="javascript:void(0)" class="left" @click="left()" v-show="index>0">
+            <img src="./image/left.svg" alt="">
+        </a>
+        <img class="mainPic" :src="imgArray[index]" alt="">
+        <a href="javascript:void(0)" class="right" @click="right()" v-show="index<imgArray.length-1">
+            <img src="./image/right.svg" alt="">
+        </a>
+    </div>
+    <script src="../../vue.js"></script>
+    <script>
+        let apps = new Vue({
+            el: ".app",
+            data: {
+                imgArray: [
+                    "./image/img1.jpg",
+                    "./image/img2.jpg",
+                    "./image/img3.jpg",
+                    "./image/img4.jpg",
+                    "./image/img5.jpg",
+                    "./image/img6.jpg",
+                    "./image/img7.jpg",
+                    "./image/img8.jpg",
+                ],
+                index: 0,
+            },
+            methods: {
+                left() {
+                    this.index = this.index - 1;
+                },
+                right() {
+                    this.index = this.index + 1;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

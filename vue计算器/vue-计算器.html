@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>vue计算器</title>
+    <script src="./js/vue.js"></script>
+    <style>
+        @media screen and (min-width: 700px) {
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-width: 100vh;
+                background-color: #eee;
+            }
+
+            .calculator {
+                /* 定义变量，用于之后布局 */
+                --button-width: 80px;
+                --button-height: 80px;
+
+                display: grid;
+                grid-template-areas: "result result result result"
+                    "ac divide multiple minus"
+                    "number-7 number-8 number-9 add"
+                    "number-4 number-5 number-6 plus-minus"
+                    "number-1 number-2 number-3 equal"
+                    "number-0 number-0 dot percent";
+                grid-template-rows: repeat(6, var(--button-width));
+                grid-template-columns: repeat(4, var(--button-height));
+                box-shadow: -8px -8px 16px -10px rgba(255, 255, 255, 1), 8px 8px 16px -10px rgba(0, 0, 0, .15);
+                padding: 24px;
+                border-radius: 20px;
+            }
+
+            .calculator button {
+                margin: 8px;
+                border: 0;
+                padding: 0;
+                display: block;
+                border-radius: calc(var(--button-height)/2);
+                font-size: 24px;
+                font-family: Helvetica;
+                color: #999;
+                background: linear-gradient(135deg, rgba(230, 230, 230, 1) 0%, rgba(246, 246, 246, 1) 100%);
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1), 4px 4px 10px -8px rgba(0, 0, 0, .3);
+            }
+
+            .calculator button:hover {
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1) inset, 4px 4px 10px -8px rgba(0, 0, 0, .3) inset;
+            }
+
+            .result {
+                text-align: right;
+                line-height: var(--button-height);
+                font-size: 48px;
+                font-family: Helvetica;
+                padding: 0 20px;
+                color: #666;
+                width: calc(4*var(--button-width));
+            }
+        }
+
+        /*响应式布局*/
+        @media screen and (max-width:700px) {
+            body {
+                margin-top: 30%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 95%;
+                align-items: center;
+                background-color: #eee;
+            }
+
+            .calculator {
+                /* 定义变量，用于之后布局 */
+                --button-width: 5rem;
+                --button-height: 5rem;
+
+                display: grid;
+                grid-template-areas: "result result result result"
+                    "ac divide multiple minus"
+                    "number-7 number-8 number-9 add"
+                    "number-4 number-5 number-6 plus-minus"
+                    "number-1 number-2 number-3 equal"
+                    "number-0 number-0 dot percent";
+                grid-template-rows: repeat(6, var(--button-width));
+                grid-template-columns: repeat(4, var(--button-height));
+                box-shadow: -8px -8px 16px -10px rgba(255, 255, 255, 1), 8px 8px 16px -10px rgba(0, 0, 0, .15);
+                padding: 24px;
+                border-radius: 20px;
+            }
+
+            .calculator button {
+                margin: 8px;
+                border: 0;
+                padding: 0;
+                display: block;
+                border-radius: calc(var(--button-height)/2);
+                font-size: 24px;
+                font-family: Helvetica;
+                color: #999;
+                background: linear-gradient(135deg, rgba(230, 230, 230, 1) 0%, rgba(246, 246, 246, 1) 100%);
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1), 4px 4px 10px -8px rgba(0, 0, 0, .3);
+            }
+
+            .calculator button:hover {
+                box-shadow: -4px -4px 10px -8px rgba(255, 255, 255, 1) inset, 4px 4px 10px -8px rgba(0, 0, 0, .3) inset;
+            }
+
+            .result {
+                text-align: right;
+                line-height: var(--button-height);
+                font-size: 48px;
+                font-family: Helvetica;
+                padding: 0 20px;
+                color: #666;
+                width: calc(4*var(--button-width));
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <div class="calculator">
+            <div class="result">{{equation}}
+            </div>
+            <button style="grid-area: ac;" @click="ac()">AC</button>
+            <button style="grid-area: plus-minus;" @click="">±</button>
+            <button style="grid-area: percent;" @click="c">c</button>
+            <button style="grid-area: add;" @click="addCal('+')">+</button>
+            <button style="grid-area: minus;" @click="addCal('-')">-</button>
+            <button style="grid-area: multiple;" @click="addCal('*')">×</button>
+            <button style="grid-area: divide;" @click="addCal('/')">÷</button>
+            <button style="grid-area: equal;" @click="calculate()">=</button>
+
+            <button style="grid-area: number-1;" @click="addCal('1')">1</button>
+            <button style="grid-area: number-2;" @click="addCal('2')">2</button>
+            <button style="grid-area: number-3;" @click="addCal('3')">3</button>
+            <button style="grid-area: number-4;" @click="addCal('4')">4</button>
+            <button style="grid-area: number-5;" @click="addCal('5')">5</button>
+            <button style="grid-area: number-6;" @click="addCal('6')">6</button>
+            <button style="grid-area: number-7;" @click="addCal('7')">7</button>
+            <button style="grid-area: number-8;" @click="addCal('8')">8</button>
+            <button style="grid-area: number-9;" @click="addCal('9')">9</button>
+            <button style="grid-area: number-0;" @click="addCal('0')">0</button>
+
+            <button style="grid-area: dot;" @click="addCal('.')">.</button>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data() {
+                return {
+                    resulst: 0,
+                    currentequation: '',
+                    equation: '',
+                    long: 0,
+                }
+            },
+            methods: {
+                calculate() {
+                    this.result = eval(this.equation);
+                    this.equation = this.result;
+                    this.currentequation = '';
+                },
+                ac() {
+                    this.result = 0;
+                    this.equation = '';
+                    this.currentequation = '';
+                },
+                addCal(cal) {
+                    this.currentequation = String(this.currentequation);
+                    this.long = this.currentequation.length;
+                    if (this.currentequation === '' && isNaN(cal)) {
+                        this.currentequation = '0' + cal;
+                        this.equation = this.currentequation;
+                    } else if (isNaN(cal) && isNaN(this.currentequation[this.long-1])) {
+                        return;
+                    } else {
+                        this.currentequation = this.currentequation + cal;
+                        this.equation = this.currentequation;
+                    }
+                },
+                c() {
+                    this.long = this.currentequation.length;
+                    this.currentequation = this.currentequation.slice(0, this.long - 1);
+                    this.equation = this.currentequation;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
