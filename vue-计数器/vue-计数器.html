@@ -39,12 +39,18 @@
 
 <body>
     <div class="app">
+        <!-- 计数器 -->
         <h2>当前计数：{{counter}}</h2>
         <div class="content">
             <button @click="sub()">-</button>
             <div class="counter">{{counter}}</div>
             <button @click="add()">+</button>
         </div>
+        <!-- 输入框 -->
+        <input type="text" v-model="currentMessage" @keyup.enter="sayHi(currentMessage)" >
+        <div style=" background-color:bisque;">我想告诉你：{{message}}</div>
+        <br>
+        <!-- 图片状态切换 -->
         <button @click="changeState()" title="切换背景图片状态">切换背景图片状态</button>
         <br>
         <!-- <img src="../bg.jpg" alt="" v-show="isShow"> -->
