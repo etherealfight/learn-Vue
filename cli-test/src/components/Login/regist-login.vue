@@ -1,12 +1,20 @@
+<!--
+* @FileDescription:登录注册组件
+-->
 <template>
-  <div class="main">
-    <div class="box">
+  <div class="rlmain">
+    <main-header></main-header>
+    <div class="rlbox">
       <div class="title"><img src="../../../public/book.png" />四大名著</div>
-      <div class="middle">
-        <router-link to="/regist-login/regist" class="middleitem1">注册</router-link>
-        <router-link to="/regist-login/login" class="middleitem2">登录</router-link>
+      <div class="rlmiddle">
+        <router-link to="/regist-login/regist" class="middleitem1"
+          >注册</router-link
+        >
+        <router-link to="/regist-login/login" class="middleitem2"
+          >登录</router-link
+        >
       </div>
-      <div class="button">
+      <div class="rlbutton">
         <router-view></router-view>
       </div>
     </div>
@@ -14,20 +22,23 @@
 </template>
 
 <script>
+import main_header from "../Homepage/main-header";
 export default {
-  methods: {},
-  mounted() {},
+  components: {
+    "main-header": main_header,
+  },
 };
 </script>
 
 <style>
-.main {
+.rlmain {
   display: flex;
-  padding: 50px;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.box {
+.rlbox {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -39,13 +50,13 @@ export default {
   font-family: "fm";
   src: url("../../../public/刻石录钢笔鹤体(I.PenCrane-B).ttf");
 }
-.title {
+.rltitle {
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   height: 150px;
-  width: 35vw;
+  width: 570px;
   font-size: 40px;
   font-family: fm;
   border-bottom: 1px lightgray solid;
@@ -54,10 +65,10 @@ img {
   height: 50px;
   width: 50px;
 }
-.middle {
+.rlmiddle {
   display: flex;
   height: 70px;
-  width: 35vw;
+  width: 570px;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;

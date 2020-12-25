@@ -6,24 +6,25 @@ import homepage from '../components/Homepage/homepage'
 import regist_login from '../components/Login/regist-login'
 import regist from '../components/Login/regist'
 import login from '../components/Login/login'
+import profile from '../components/profile/profile'
+import publish from '../components/Homepage/publish'
+import personalPage from "../components/profile/personalPage"
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 
+//定义路由
 const routes = [{
     path: '/',
-    components: {
-      homepage:homepage,
-      regist_login:regist_login,
-    }
+    redirect: '/homepage' //将根路由重定向到首页
   },
   {
     path: '/homepage',
-    component: homepage,
+    component: homepage, //首页
   },
   {
     path: '/regist-login',
-    component: regist_login,
+    component: regist_login, //登录注册页面
     children: [{
         path: '/regist-login/regist',
         component: regist
@@ -34,13 +35,28 @@ const routes = [{
       }
     ]
   },
-
-
+  {
+    path: '/profile',
+    component: profile //个人信息页面
+  },
+  {
+    path: '/personalPage',
+    component: personalPage //个人主页
+  },
+  {
+    path: '/publish',
+    component: publish //发布文章页面
+  }
 ]
-
+//创建router示例
 const router = new VueRouter({
   routes,
   mode: 'history',
 })
+
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 export default router

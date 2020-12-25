@@ -1,23 +1,19 @@
 <template>
   <div id="app">
-    <router-view name="homepage"></router-view>
-    <router-view></router-view>
-    <router-view name="regist_login"></router-view>
+    <div>
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </div>
   </div>
 </template>
 
 <script>
-import regist_login from "./components/Login/regist-login";
-import homepage from "./components/Homepage/homepage";
-import store from './store'
+import store from "./store";
 
 export default {
   name: "App",
   store,
-  components: {
-    "regist-login": regist_login,
-    homepage: homepage,
-  },
 };
 </script>
 
@@ -29,6 +25,7 @@ export default {
 body {
   height: 100vh;
   width: 100vw;
+  overflow-X: hidden;
   background-image: url("../public/bg.png");
 }
 </style>
