@@ -12,6 +12,7 @@ const store = new Vuex.Store({
         userImage: "http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg", //用户头像
         sign: '', //用户签名
         introduction: '', //用户简介
+        tempUsername: '' //被点击查询主页的用户名
     },
     mutations: {
         /**
@@ -27,7 +28,7 @@ const store = new Vuex.Store({
          * 修改用户头像
          */
         changeUserImage(state, payload) {
-            state.userImage = payload.userImage;
+            state.userImage = "http://192.168.1.104:8080" + payload.userImage;
         },
         /**
          * 初始化用户信息
@@ -40,7 +41,8 @@ const store = new Vuex.Store({
             state.introduction = payload.introduction;
             state.userImage = payload.userImage;
             state.loginState = true;
-        }
+        },
+
     }
 })
 

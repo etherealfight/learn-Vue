@@ -32,9 +32,6 @@ export default {
       },
     };
   },
-  created() {
-    console.log(this.$store.state.loginState);
-  },
   methods: {
     /**
      * 监听登录按钮发送登录请求
@@ -46,7 +43,7 @@ export default {
           that.usermessage.username,
           that.usermessage.password
         );
-        console.log(res);
+        //console.log(res);
         if (res.success == true) {
           this.$store.commit("initialData", {
             username: res.detail.username,
@@ -54,7 +51,7 @@ export default {
             nickname: res.detail.nickname,
             sign: res.detail.signature,
             introduction: res.detail.introductory,
-            //userImage:res.detaik.
+            userImage:res.detail.fileaddress
           });
           this.$message.info("登录成功");
           this.$router.push({ path: "/homepage" });

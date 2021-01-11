@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <div>
-      <keep-alive>
-        <router-view></router-view>
-      </keep-alive>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -23,9 +21,10 @@ export default {
   padding: 0;
 }
 body {
+  max-width: 100vw;
   height: 100vh;
   width: 100vw;
-  overflow-X: hidden;
+  overflow-x:auto;
   background-image: url("../public/bg.png");
 }
 </style>

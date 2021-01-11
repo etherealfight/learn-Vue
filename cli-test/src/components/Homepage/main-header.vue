@@ -19,10 +19,10 @@
       <router-link to="/regist-login/regist" class="mainPageLogin"
         >注册</router-link
       >
-      <router-link to="/regist-login/login" class="mainPageLogin"
+      <router-link to="/regist-login/login" class="mainPageLogin" v-if="!$store.state.loginState"
         >登录</router-link
       >
-      <router-link to="/profile" class="mainPageLogin" v-if="true">{{
+      <router-link :to="{path:'/mypersonalPage'}" class="mainPageLogin" v-if="$store.state.loginState">{{
         $store.state.userName
       }}</router-link>
     </div>

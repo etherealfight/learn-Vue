@@ -9,6 +9,7 @@ import login from '../components/Login/login'
 import profile from '../components/profile/profile'
 import publish from '../components/Homepage/publish'
 import personalPage from "../components/profile/personalPage"
+import mypersonalPage from "../components/profile/mypersonalPage"
 
 Vue.use(ElementUI)
 Vue.use(VueRouter)
@@ -40,8 +41,12 @@ const routes = [{
     component: profile //个人信息页面
   },
   {
+    path: '/mypersonalPage',
+    component: mypersonalPage //个人主页
+  },
+  {
     path: '/personalPage',
-    component: personalPage //个人主页
+    component: personalPage //他人主页
   },
   {
     path: '/publish',

@@ -11,12 +11,7 @@
           <span class="personalWords">个性签名：{{ sign }}</span>
           <span class="personalWords">个人简介：{{ introduction }}</span>
         </div>
-        <el-button
-          v-show="showChange"
-          id="personalChange"
-          @click="personalChange"
-          >修改个人资料</el-button
-        >
+        <el-button v-show="showChange" id="personalChange" @click="personalChange">修改个人资料</el-button>
       </div>
       <div class="personalContents">
         <contentList id="personalList" :contentData="datas"></contentList>
@@ -46,10 +41,10 @@ export default {
       pageNum: 1, //当前展示到的页面
       totalNum: 1, //总共查询到满足条件的页面
       showLoading: false, //是否在加载中标识
-      username: this.$route.query.username,
-      userImage: this.$route.query.userImage,
-      sign: this.$route.query.sign,
-      introduction: this.$route.query.introduction,
+      username: this.$store.state.userName,
+      userImage: this.$store.state.userImage,
+      sign: this.$store.state.sign,
+      introduction:this.$store.state.introduction,
     };
   },
   async created() {
@@ -99,15 +94,17 @@ export default {
         }
       }
     },
-    personalChange() {
-      this.$router.push("/profile");
-    },
+    personalChange(){
+        this.$router.push("/profile")
+    }
   },
-  computed: {
+   computed: {
     showChange() {
-      //console.log(this.username);
-      //console.log(this.$store.state.userName);
-      return this.username === this.$store.state.userName;
+        //console.log(this.username)
+        //console.log(this.$store.state.userName)
+      return (
+        this.username === this.$store.state.userName
+      );
     },
   },
 };
@@ -149,9 +146,9 @@ export default {
   width: 600px;
   word-break: break-all;
 }
-#personalChange {
-  margin-left: -130px;
-  margin-top: -80px;
-  padding: 10px;
+#personalChange{
+    margin-left:-130px ;
+    margin-top: -80px;
+    padding:10px
 }
 </style>

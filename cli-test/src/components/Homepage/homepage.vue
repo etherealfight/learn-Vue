@@ -24,9 +24,7 @@
 <script>
 import main_header from "./main-header";
 import ContentList from "./contentList";
-import { searchData } from "../../api";
-import { searchData1 } from "../../api";
-import { searchData2 } from "../../api";
+import { searchData, searchData1, searchData2 } from "../../api";
 
 export default {
   components: {
@@ -53,8 +51,8 @@ export default {
     const res = await searchData(that.pageNum);
     this.datas = res.detail;
     this.totalNum = res.pageNumber;
-    console.log(res);
     this.pageNum++;
+    console.log(res)
   },
   /**
    * 监听页面滚动
@@ -73,7 +71,6 @@ export default {
      * 监听main-header中查询关键词的动作
      */
     changeKeyword(data) {
-      console.log(data);
       this.datas = [];
       this.pageNum = 1;
       this.keyword = data;
@@ -122,10 +119,7 @@ export default {
           if (this.pageNum <= this.pageNum1) {
             const res1 = await searchData1(that.keyword, that.pageNum);
             if (res1.detail.length < 20 && this.pageNum == 1) {
-              const res2 = await searchData2(
-                that.keyword,
-                that.pageNum 
-              );
+              const res2 = await searchData2(that.keyword, that.pageNum);
               this.datas = [...this.datas, ...res2.detail];
               this.pageNum++;
             }
@@ -146,7 +140,7 @@ export default {
     handleScroll() {
       if (
         document.documentElement.scrollTop + window.innerHeight >=
-        document.body.scrollHeight - 1
+        document.body.scrollHeight - 1 && document.documentElement.scrollTop>10
       ) {
         if (this.pageNum > this.totalNum) {
           this.$message.info("到底啦别拉了");

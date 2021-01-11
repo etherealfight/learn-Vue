@@ -45,7 +45,7 @@ export const login = (username, password) => {
  * @param {String} introductory
  * @return {Obj}  
  */
-export const update = (username, nickname, gender, signature, introductory) => {
+export const update = (username, nickname, gender, signature, introductory,fileaddress) => {
     return instance({
         url: '/update',
         method: 'GET',
@@ -54,7 +54,8 @@ export const update = (username, nickname, gender, signature, introductory) => {
             nickname,
             gender,
             signature,
-            introductory
+            introductory,
+            fileaddress
         }
     })
 }
@@ -113,7 +114,7 @@ export const searchData1 = (username, currentPage) => {
 export const searchData2 = (targetParam, currentPage) => {
 
     return instance({
-        url: '/',
+        url: '/findbysen',
         method: 'GET',
         params: {
             targetParam,
@@ -122,12 +123,24 @@ export const searchData2 = (targetParam, currentPage) => {
     })
 }
 
-export const uploadImg = (file) => {
-    let form = new FormData();
-    form.append('file', file)
+// export const uploadImg = (file) => {
+//     let form = new FormData();
+//     form.append('file', file)
+//     return instance({
+//         url: '/uploadfile',
+//         method: 'POST',
+//         data: form
+//     })
+// }
+/**
+ * 删除评论
+ */
+export const deleteContent = (id) => {
     return instance({
-        url: '/headImg',
-        method: 'POST',
-        data: form
+        url: '/deletesen',
+        method: 'GET',
+        params: {
+            id
+        }
     })
 }

@@ -5,23 +5,32 @@
   <div class="contentListBox">
     <contents
       class="listItem"
-      v-for="item in contentData"
+      v-for="(item, index) in contentData"
       :key="item.id"
-      userImg="http://www.shuoshuodaitupian.com/images/avatar_selection/avatar0011.jpg"
+      :fileaddress="item.fileaddress"
+      :id="item.id"
       :username="item.username"
       :nickname="item.nickname"
       :introduction="item.introductory"
       :sign="item.signature"
       :contentText="item.production"
+      :date="item.date"
+      @deleteContent="handleDelete(index)"
     ></contents>
   </div>
 </template>
 
 <script>
 import Contents from "./content";
+
 export default {
   components: {
     contents: Contents,
+  },
+  methods: {
+    handleDelete(index) {
+      this.contentData.splice(index, 1);
+    },
   },
   /**
    *  接受从homepage组件传来的文章参数
@@ -49,6 +58,7 @@ export default {
       ],
     },
   },
+ 
 };
 </script>
 

@@ -7,11 +7,10 @@
 
     <div class="box">
       <div class="profileHeader">
-        <img :src="userImg" id="profileImg" />
+        <img :src="$store.state.userImage" id="profileImg" />
         <el-upload
           class="upload-demo"
-          action="https://1de7697c-1d84-4635-a61c-012af5fbcb48.mock.pstmn.io"
-          :data="{ username: $store.state.userName }"
+          action="http://192.168.1.104:8080/uploadfile"
           :show-file-list="false"
           :on-error="showError"
           :on-success="showSuccess"
@@ -117,9 +116,19 @@ export default {
     showError(err, file, fileList) {
       console.log(err);
     },
-    showSuccess(response, file, fileList) {
-      console.log(response);
-      this.$store.commit("changeUserImage", { userImage: response.userImage });
+    async showSuccess(response, file, fileList) {
+      console.log(response.detail);
+      this.$store.commit("changeUserImage", { userImage: response.detail });
+      let that = this;
+      const res = await update(
+        that.$store.state.userName,
+        that.$store.state.nickName,
+        that.$store.state.sex,
+        that.$store.state.sign,
+        that.$store.state.introduction,
+        that.$store.state.userImage,
+      );
+      console.log(res)
     },
     /**
      * 监听修改按钮，发送修改后的用户信息
@@ -131,7 +140,8 @@ export default {
         that.$store.state.nickName,
         that.$store.state.sex,
         that.$store.state.sign,
-        that.$store.state.introduction
+        that.$store.state.introduction,
+        that.$store.state.userImage,
       );
       this.$store.commit("changeStates", {
         sex: that.$store.state.sex,
@@ -143,10 +153,7 @@ export default {
       this.$message.info("修改成功");
     },
   },
-  mounted() {
-    console.log(this.$store.state.userName);
-    console.log(this.$store.state.userImage);
-  },
+
 };
 </script>
 

@@ -41,7 +41,7 @@ export default {
       else {
         const res = await publish(this.$store.state.userName, that.publishText);
         this.$router.push({ path: "/homepage" });
-        this.$message(res.msg);
+        this.$message.info(res.msg);
       }
     },
   },

@@ -18,18 +18,37 @@
             introduction
           }}</span>
         </div>
-        <img :src="userImg" class="contentImg" slot="reference" @click="toPersonalPage"/>
+        <img
+          :src="fileaddress"
+          class="contentImg"
+          slot="reference"
+          @click="toPersonalPage"
+        />
       </el-popover>
 
       <span id="contentUsername" @click="toPersonalPage">{{ username }}</span>
+      <i
+        class="el-icon-delete"
+        v-if="showDelete"
+        style="margin-right: 20px; margin-left: auto"
+        @click="del"
+      ></i>
     </div>
     <div class="contentText">
-      {{ contentText }}
+      <span> {{ contentText }}</span>
+      <span style="margin-right: 20px; margin-left: auto"
+        >---------{{ username }} {{ currentData }}</span
+      >
     </div>
   </div>
 </template>
 
 <script>
+import { deleteContent } from "../../api";
+import dayjs from "dayjs";
+// 或者 CommonJS
+// var dayjs = require('dayjs');
+
 export default {
   /**
    * 接受从contentList传来的文章以及用户参数
@@ -40,7 +59,16 @@ export default {
       type: String,
       default: "",
     },
-
+    //发布时间
+    date: {
+      type: String,
+      default: "",
+    },
+    //id
+    id: {
+      type: Number,
+      default: 0,
+    },
     //用户名
     username: {
       type: String,
@@ -52,7 +80,7 @@ export default {
       default: "",
     },
     //用户头像
-    userImg: {
+    fileaddress: {
       type: String,
       default: "",
     },
@@ -68,10 +96,42 @@ export default {
     },
   },
   methods: {
-    toPersonalPage(){
-      this.$router.pash({ path: '/personalPage'})
-    }
-  }
+    toPersonalPage() {
+      if (this.username == this.$store.state.userName &&this.$store.state.loginState==true) {
+        this.$router.push({
+          path: "/mypersonalPage",
+        });
+      } else {
+        this.$router.push({
+          path: "/personalPage",
+          query: {
+            username: this.username,
+            userImage: this.fileaddress,
+            sign: this.sign,
+            introduction: this.introduction,
+          },
+        });
+      }
+    },
+    async del() {
+      this.$emit("deleteContent", "");
+      console.log("zzd");
+      let that = this;
+      const res = await deleteContent(that.id);
+      console.log(res);
+    },
+  },
+  computed: {
+    showDelete() {
+      return (
+        this.$route.path == "/mypersonalPage" &&
+        this.username === this.$store.state.userName
+      );
+    },
+    currentData() {
+      return dayjs(this.date).format("YYYY年MM月DD日 HH:mm:ss");
+    },
+  },
 };
 </script>
 
@@ -101,9 +161,15 @@ export default {
   margin-right: 20px;
 }
 .contentText {
+  width: 600px;
   margin-top: 20px;
   margin-bottom: 20px;
   padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
 }
 #poBox {
   display: flex;
